@@ -14,10 +14,13 @@ with open(sys.argv[1], "r") as f:
     n = int(sys.argv[2])
     print(n)
     A = np.zeros((n, n), dtype=float)
-    for src, dst in reader:  # src = source, dst = destination
-        A[int(dst) - 1][int(src) - 1] = 1.0  # populate the A matrix in index (dst, src)
+    # src = source, dst = destination
+    for src, dst in reader:
+        # populate the A matrix in index (dst, src)
+        A[int(dst) - 1][int(src) - 1] = 1.0
     for i in range(n):
-        if np.all(A[:, i] == 0.0):  # handle dangling nodes
+        # handle dangling nodes
+        if np.all(A[:, i] == 0.0):
             A[:, i] = 1.0 / n
         else:
             A[:, i] = A[:, i] / np.sum(A[:, i])
@@ -25,7 +28,8 @@ with open(sys.argv[1], "r") as f:
 # create M matrix from A, incorporating damping factor
 M = damping * A + ((1 - damping) / n) * np.ones((n, n), dtype=float)
 
-x = np.ones((n,), dtype=float) / n  # create initial pagerank
+# create initial pagerank
+x = np.ones((n,), dtype=float) / n
 x_trail = np.copy(x)
 
 for _ in range(max_iter):
