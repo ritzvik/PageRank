@@ -33,7 +33,7 @@ x = np.ones((n,), dtype=float) / n
 x_trail = np.copy(x)
 
 for _ in range(max_iter):
-    print(x)
+    # print(x)
     x = np.inner(M, x_trail)
     if np.max(np.abs(x - x_trail)) <= tol:
         break
